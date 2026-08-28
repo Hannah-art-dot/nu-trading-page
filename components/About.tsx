@@ -90,7 +90,7 @@ export function About() {
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-slate-600 dark:text-slate-400">
             A technology and trading company committed to innovation, integrity,
-            and impact — building solutions that move Africa forward.
+            and impact building solutions that move Africa forward.
           </p>
         </motion.div>
 
