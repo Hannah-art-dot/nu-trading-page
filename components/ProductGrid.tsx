@@ -51,7 +51,7 @@ export function ProductGrid() {
           <span className="text-xs font-semibold uppercase tracking-widest text-amber-500">
             Our products & offerings
           </span>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+       <h2 className="mt-3 text-xl font-normal tracking-tight text-slate-600 dark:text-slate-400 sm:text-1xl">
             Technology & Industrial Solutions
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-400">

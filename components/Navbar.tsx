@@ -13,7 +13,7 @@ import {
   useMotionValue,
   animate,
 } from "motion/react"
-import { Menu, X, Sun, Moon, ArrowRight } from "lucide-react"
+import { Menu, X, Sun, Moon } from "lucide-react"
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -143,14 +143,6 @@ export function Navbar() {
 
           <div className="flex items-center gap-3">
             <ThemeToggle mounted={mounted} resolvedTheme={resolvedTheme} onToggle={toggleTheme} />
-
-            <Link
-              href="#contact"
-              className="group inline-flex items-center gap-1.5 rounded-full bg-amber-400 px-5 py-2.5 text-sm font-semibold text-slate-950 transition-all hover:bg-amber-300 hover:shadow-lg hover:shadow-amber-400/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-            >
-              Get in touch
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-            </Link>
           </div>
         </div>
 
@@ -191,16 +183,6 @@ export function Navbar() {
                   </Link>
                 </li>
               ))}
-              <li className="pt-2">
-                <Link
-                  href="#contact"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-1.5 rounded-full bg-amber-400 px-5 py-3 text-sm font-semibold text-slate-950 transition-colors hover:bg-amber-300"
-                >
-                  Get in touch
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </li>
             </ul>
           </motion.div>
         )}

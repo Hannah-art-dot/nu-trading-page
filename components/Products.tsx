@@ -1,8 +1,9 @@
 "use client"
 
 import * as React from "react"
+import { useRef } from "react"
 import Image from "next/image"
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react"
+import { motion, useMotionValue, useSpring, useTransform, useScroll } from "motion/react"
 
 interface Product {
   title: string
@@ -39,51 +40,65 @@ const PRODUCTS: Product[] = [
 ]
 
 export function Products() {
+  const sectionRef = useRef<HTMLElement>(null)
+
+  // Track scroll position for the scroll-reactive parallax fade effect (exit part only)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  })
+  const productsY = useTransform(scrollYProgress, [0, 1], [0, 150])
+  const productsOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
+
   // Duplicate array to create a seamless infinite horizontal loop
   const duplicatedProducts = [...PRODUCTS, ...PRODUCTS]
 
   return (
-    <section id="products" className="relative overflow-hidden bg-white py-24 dark:bg-slate-950 sm:py-32 transition-colors duration-300">
+    <section
+      ref={sectionRef}
+      id="products"
+      className="relative overflow-hidden bg-white py-24 dark:bg-slate-950 sm:py-32 transition-colors duration-300"
+    >
       {/* Background ambient glow */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-500/5 blur-[100px] dark:bg-amber-500/10" />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400">
-            Our products & offerings
-          </span>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
-            Technology & Industrial Solutions
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-slate-600 dark:text-slate-400">
-            Absorbing, integrating, and applying advanced manufacturing solutions across Africa.
-          </p>
+      {/* Scroll-reactive wrapper that shifts and fades only on exit */}
+      <motion.div style={{ y: productsY, opacity: productsOpacity }}>
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <span className="text-xs font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400">
+              Our products & offerings
+            </span>
+       <h2 className="mt-3 text-xl font-normal tracking-tight text-slate-600 dark:text-slate-200 sm:text-1xl">
+              Technology & Industrial Solutions
+            </h2>
+          </div>
         </div>
-      </div>
 
-      {/* Horizontal Continuous Marquee Track */}
-      <div className="relative mt-16 w-full overflow-hidden flex">
-        {/* Left/Right Fade Gradients for smooth clipping matching section background */}
-        <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-24 bg-gradient-to-r from-white to-transparent dark:from-slate-950 dark:to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-24 bg-gradient-to-l from-white to-transparent dark:from-slate-950 dark:to-transparent" />
+        {/* Horizontal Continuous Marquee Track */}
+        <div className="relative mt-16 w-full overflow-hidden flex">
+          {/* Left/Right Fade Gradients for smooth clipping matching section background */}
+          <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-24 bg-gradient-to-r from-white to-transparent dark:from-slate-950 dark:to-transparent" />
+          <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-24 bg-gradient-to-l from-white to-transparent dark:from-slate-950 dark:to-transparent" />
 
-        <motion.div
-          className="flex gap-6 pl-4 items-center whitespace-nowrap"
-          style={{ width: "max-content" }} /* <--- THIS FIXES THE JUMPING AND FORCES TRUE INFINITE LOOP */
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            repeat: Infinity,
-            ease: "linear",
-            duration: 25, // Change speed here (higher is slower)
-          }}
-        >
-          {duplicatedProducts.map((product, index) => (
-            <div key={`${product.title}-${index}`} className="w-[350px] shrink-0 sm:w-[380px] whitespace-normal">
-              <TiltCard product={product} />
-            </div>
-          ))}
-        </motion.div>
-      </div>
+          <motion.div
+            className="flex gap-6 pl-4 items-center whitespace-nowrap"
+            style={{ width: "max-content" }} /* <--- THIS FIXES THE JUMPING AND FORCES TRUE INFINITE LOOP */
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{
+              repeat: Infinity,
+              ease: "linear",
+              duration: 25, // Change speed here (higher is slower)
+            }}
+          >
+            {duplicatedProducts.map((product, index) => (
+              <div key={`${product.title}-${index}`} className="w-[350px] shrink-0 sm:w-[380px] whitespace-normal">
+                <TiltCard product={product} />
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.div>
     </section>
   )
 }

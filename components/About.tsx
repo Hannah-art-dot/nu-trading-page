@@ -85,13 +85,9 @@ export function About() {
           <span className="inline-block rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-amber-600 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-400">
             Who We Are
           </span>
-          <h2 className="mt-6 text-4xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-5xl">
-            About NU Trading
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-slate-600 dark:text-slate-400">
-            A technology and trading company committed to innovation, integrity,
-            and impact building solutions that move Africa forward.
-          </p>
+       <h2 className="mt-3 text-xl font-normal tracking-tight text-slate-600 dark:text-slate-400 sm:text-1xl">
+      Nu is a technology and trading company
+    </h2>
         </motion.div>
 
         {/* Pillars bento grid */}
