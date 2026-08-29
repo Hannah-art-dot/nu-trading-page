@@ -18,7 +18,6 @@ const PRODUCTS: Product[] = [
     imageSrc: "/products/electronics.png",
     description: "Advanced controllers and integrated circuitry built for heavy industrial environments.",
   },
-
   {
     title: "Heavy Machinery",
     category: "Industrial Equipment",
@@ -63,22 +62,23 @@ export function Products() {
       </div>
 
       {/* Horizontal Continuous Marquee Track */}
-      <div className="relative mt-16 w-full overflow-hidden">
+      <div className="relative mt-16 w-full overflow-hidden flex">
         {/* Left/Right Fade Gradients for smooth clipping matching section background */}
         <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-24 bg-gradient-to-r from-white to-transparent dark:from-slate-950 dark:to-transparent" />
         <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-24 bg-gradient-to-l from-white to-transparent dark:from-slate-950 dark:to-transparent" />
 
         <motion.div
-          className="flex gap-6 px-4"
+          className="flex gap-6 pl-4 items-center whitespace-nowrap"
+          style={{ width: "max-content" }} /* <--- THIS FIXES THE JUMPING AND FORCES TRUE INFINITE LOOP */
           animate={{ x: ["0%", "-50%"] }}
           transition={{
             repeat: Infinity,
             ease: "linear",
-            duration: 25, // Adjust speed here (higher is slower)
+            duration: 25, // Change speed here (higher is slower)
           }}
         >
           {duplicatedProducts.map((product, index) => (
-            <div key={`${product.title}-${index}`} className="w-[350px] shrink-0 sm:w-[380px]">
+            <div key={`${product.title}-${index}`} className="w-[350px] shrink-0 sm:w-[380px] whitespace-normal">
               <TiltCard product={product} />
             </div>
           ))}

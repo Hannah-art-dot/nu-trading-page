@@ -38,34 +38,34 @@ export function Footer() {
             Part of our group & partner network
           </p>
 
-          <div className="relative mt-8 w-full overflow-hidden">
+          <div className="relative mt-8 w-full overflow-hidden flex">
             {/* Fade gradients on the edges */}
             <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-24 bg-gradient-to-r from-white dark:from-slate-950 to-transparent" />
             <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-24 bg-gradient-to-l from-white dark:from-slate-950 to-transparent" />
 
             <motion.div
               className="flex items-center gap-16 py-6"
+              style={{ width: "max-content" }} /* <--- THIS FIXES THE LOOP ALIGNMENT */
               animate={{ x: ["-50%", "0%"] }} // Left to right movement direction
               transition={{
                 repeat: Infinity,
                 ease: "linear",
-                duration: 25,
+                duration: 40,
               }}
-              whileHover={{ animationPlayState: "paused" }}
             >
               {duplicatedCompanies.map((company, index) => (
                 <div
                   key={`${company.name}-${index}`}
-                  className="relative h-28 w-60 shrink-0 transition-transform duration-300 hover:scale-110" // Larger logo sizing
+                  className="relative h-28 w-60 shrink-0 transition-transform duration-300 hover:scale-110"
                 >
                   <Image
-  src={company.src}
-  alt={company.name}
-  fill
-  sizes="240px"
-  loading="lazy" // <--- Add this line
-  className="object-contain filter dark:brightness-125 transition-all duration-300"
-/>
+                    src={company.src}
+                    alt={company.name}
+                    fill
+                    sizes="240px"
+                    loading="lazy"
+                    className="object-contain filter dark:brightness-125 transition-all duration-300"
+                  />
                 </div>
               ))}
             </motion.div>
