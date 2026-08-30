@@ -55,9 +55,9 @@ export function Hero() {
           transition={{ duration: 0.6 }}
           className="mb-8 flex justify-center"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-400/15 px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 shadow-sm shadow-amber-400/10">
-  Technology &middot; Machinery &middot; Adaptation
-</span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-400/15 px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-600 dark:text-amber-500 shadow-sm shadow-amber-400/10">
+            Technology &middot; Machinery &middot; Adaptation
+          </span>
         </motion.div>
 
         {/* Smooth Continuous Phrase Carousel Heading */}
@@ -70,7 +70,7 @@ export function Hero() {
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }}
                 exit={{ opacity: 0, y: -20, filter: "blur(10px)", scale: 0.95 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-300 bg-clip-text text-transparent drop-shadow-[0_12px_24px_rgba(245,158,11,0.35)] inline-block text-center"
+                className="text-slate-900 dark:text-white inline-block text-center drop-shadow-[0_6px_16px_rgba(0,0,0,0.08)] dark:drop-shadow-[0_6px_16px_rgba(255,255,255,0.06)]"
               >
                 {currentPhrase}
               </motion.span>
