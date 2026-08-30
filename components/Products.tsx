@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import Image from "next/image"
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from "motion/react"
 
@@ -41,6 +41,7 @@ const PRODUCTS: Product[] = [
 
 export function Products() {
   const sectionRef = useRef<HTMLElement>(null)
+  const [isPaused, setIsPaused] = useState(false)
 
   // Track scroll position for the scroll-reactive parallax fade effect (exit part only)
   const { scrollYProgress } = useScroll({
@@ -57,42 +58,52 @@ export function Products() {
     <section
       ref={sectionRef}
       id="products"
-      className="relative overflow-hidden bg-white py-24 dark:bg-slate-950 sm:py-32 transition-colors duration-300"
+      className="relative overflow-hidden bg-white py-20 dark:bg-slate-950 sm:py-32 transition-colors duration-300"
     >
       {/* Background ambient glow */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-500/5 blur-[100px] dark:bg-amber-500/10" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[350px] w-[350px] sm:h-[600px] sm:w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-500/5 blur-[100px] dark:bg-amber-500/10" />
 
       {/* Scroll-reactive wrapper that shifts and fades only on exit */}
       <motion.div style={{ y: productsY, opacity: productsOpacity }}>
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="text-xs font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400">
+            <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400">
               Our products & offerings
             </span>
-       <h2 className="mt-3 text-xl font-normal tracking-tight text-slate-600 dark:text-slate-200 sm:text-1xl">
+            <h2 className="mt-3 text-lg sm:text-xl font-normal tracking-tight text-slate-600 dark:text-slate-200 px-2">
               Technology & Industrial Solutions
             </h2>
           </div>
         </div>
 
-        {/* Horizontal Continuous Marquee Track */}
-        <div className="relative mt-16 w-full overflow-hidden flex">
+        {/* Horizontal Continuous Marquee Track with Touch/Hover Pause */}
+        <div 
+          className="relative mt-12 sm:mt-16 w-full overflow-hidden flex"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+        >
           {/* Left/Right Fade Gradients for smooth clipping matching section background */}
-          <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-24 bg-gradient-to-r from-white to-transparent dark:from-slate-950 dark:to-transparent" />
-          <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-24 bg-gradient-to-l from-white to-transparent dark:from-slate-950 dark:to-transparent" />
+          <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-12 sm:w-24 bg-gradient-to-r from-white to-transparent dark:from-slate-950 dark:to-transparent" />
+          <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-12 sm:w-24 bg-gradient-to-l from-white to-transparent dark:from-slate-950 dark:to-transparent" />
 
           <motion.div
-            className="flex gap-6 pl-4 items-center whitespace-nowrap"
-            style={{ width: "max-content" }} /* <--- THIS FIXES THE JUMPING AND FORCES TRUE INFINITE LOOP */
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              repeat: Infinity,
-              ease: "linear",
-              duration: 25, // Change speed here (higher is slower)
-            }}
+            className="flex gap-4 sm:gap-6 pl-4 items-center whitespace-nowrap"
+            style={{ width: "max-content" }}
+            animate={isPaused ? { x: undefined } : { x: ["0%", "-50%"] }}
+            transition={
+              isPaused
+                ? { duration: 0 }
+                : {
+                    repeat: Infinity,
+                    ease: "linear",
+                    duration: 28,
+                  }
+            }
           >
             {duplicatedProducts.map((product, index) => (
-              <div key={`${product.title}-${index}`} className="w-[350px] shrink-0 sm:w-[380px] whitespace-normal">
+              <div key={`${product.title}-${index}`} className="w-[300px] shrink-0 sm:w-[380px] whitespace-normal">
                 <TiltCard product={product} />
               </div>
             ))}
@@ -135,7 +146,7 @@ function TiltCard({ product }: { product: Product }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateY, rotateX, transformStyle: "preserve-3d" }}
-      className="group relative flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50/80 p-6 shadow-xl backdrop-blur-xl transition-colors hover:border-amber-500/50 dark:border-slate-800/80 dark:bg-slate-900/80 dark:shadow-2xl"
+      className="group relative flex flex-col justify-between rounded-2xl border border-slate-200 bg-slate-50/80 p-5 sm:p-6 shadow-xl backdrop-blur-xl transition-colors hover:border-amber-500/50 dark:border-slate-800/80 dark:bg-slate-900/80 dark:shadow-2xl"
     >
       {/* Ambient hover glow */}
       <div className="pointer-events-none absolute inset-0 -z-10 rounded-2xl bg-gradient-to-t from-amber-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -143,7 +154,7 @@ function TiltCard({ product }: { product: Product }) {
       {/* 3D Popping Image Container */}
       <div
         style={{ transform: "translateZ(60px)", transformStyle: "preserve-3d" }}
-        className="relative mb-6 flex h-60 w-full items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white p-2 dark:border-slate-800/50 dark:bg-slate-950/60"
+        className="relative mb-5 sm:mb-6 flex h-48 sm:h-60 w-full items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white p-2 dark:border-slate-800/50 dark:bg-slate-950/60"
       >
         <motion.div
           animate={{ y: [0, -8, 0] }}
@@ -154,7 +165,7 @@ function TiltCard({ product }: { product: Product }) {
             src={product.imageSrc}
             alt={product.title}
             fill
-            sizes="400px"
+            sizes="(max-width: 640px) 300px, 400px"
             className="object-cover rounded-lg transition-transform duration-500 group-hover:scale-105"
           />
         </motion.div>
@@ -162,13 +173,13 @@ function TiltCard({ product }: { product: Product }) {
 
       {/* 3D Popping Text Content */}
       <div style={{ transform: "translateZ(30px)" }}>
-        <span className="text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-500">
+        <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-500">
           {product.category}
         </span>
-        <h3 className="mt-1 text-lg font-bold text-slate-950 transition-colors group-hover:text-amber-600 dark:text-white dark:group-hover:text-amber-400">
+        <h3 className="mt-1 text-base sm:text-lg font-bold text-slate-950 transition-colors group-hover:text-amber-600 dark:text-white dark:group-hover:text-amber-400">
           {product.title}
         </h3>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+        <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
           {product.description}
         </p>
       </div>
