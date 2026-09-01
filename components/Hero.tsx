@@ -91,9 +91,9 @@ export function Hero() {
               ease: "easeInOut" 
             }
           }}
-          className="mt-4 sm:mt-6 text-2xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-950 dark:text-white leading-[1.2] px-1"
+         className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg font-semibold tracking-tight text-slate-900 dark:text-white leading-[1.2] px-1"
         >
-          Driving industrial growth with advanced machinery solutions
+           Advanced machinery solutions
         </motion.h1>
 
         {/* Dynamic Typing Subheadline with High-Contrast Light/Dark Gradients */}
