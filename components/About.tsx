@@ -140,20 +140,21 @@ export function About() {
           transition={{ duration: 0.6, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.2 }}
           className="relative mt-12 sm:mt-16 overflow-hidden rounded-3xl border border-slate-200 bg-slate-900 text-white shadow-xl dark:border-white/10"
         >
-          {/* Video Background Loop */}
+          {/* Video Background Loop with Enhanced Quality Settings */}
           <div className="absolute inset-0 z-0">
             <video
               autoPlay
               loop
               muted
               playsInline
-              className="h-full w-full object-cover opacity-65 dark:opacity-85 transition-opacity duration-300"
+              className="h-full w-full object-cover opacity-85 dark:opacity-95 transform-gpu transition-opacity duration-300"
             >
               <source src="/videos/about-bg.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-950/60 to-slate-950/40" />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/30" />
+            {/* Lighter overlays to keep video crisp and clear */}
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950/75 via-slate-950/50 to-slate-950/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-slate-950/20" />
           </div>
 
           <div className="relative z-10 px-6 py-12 sm:px-16 sm:py-20 lg:px-24 flex flex-col sm:flex-row sm:items-end justify-between gap-8">
